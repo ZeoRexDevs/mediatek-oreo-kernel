@@ -3,6 +3,9 @@ dist: xenial
 
 sudo: required
 
+git:
+  depth: 3
+
 addons:
   apt:
     update:
@@ -28,7 +31,7 @@ script:
   - export ARCH_MTK_PLATFORM=mt6753
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE k53v1_64_bsp_defconfig
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE -j16
-  - KERNEL_DIR=$PWD/mediatek-oreo-kernel
+  - KERNEL_DIR=$PWD
   - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/Image*
 
 after_success:
