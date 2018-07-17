@@ -37,10 +37,10 @@ script:
 
 after_success:
   - cd $KERNEL_DIR/out
-  - time tar -I pxz -cf $DIR-out-$(date +%Y%m%d).tar.xz *
-  - wput $DIR-out-$(date +%Y%m%d).tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"/
-  - rm $DIR-out-$(date +%Y%m%d).tar.xz
-  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/
+  - travis_wait 30 time tar -I pxz -cf mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz *
+  - wput mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"/
+  - rm mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz
+  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/mediatek-oreo-kernel-zImage
 
 deploy:
   skip_cleanup: true
