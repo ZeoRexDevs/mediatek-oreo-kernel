@@ -12,7 +12,8 @@ addons:
     - true
     packages:
     - curl
-    - tree
+    - pxz
+    - wput
 
 before_install:
   - git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 ~/aarch64-linux-android-4.9/
@@ -35,9 +36,11 @@ script:
   - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/Image*
 
 after_success:
-  - tree -a $KERNEL_DIR/out >> $KERNEL_DIR/out-tree.log
-  - curl --upload-file $KERNEL_DIR/out-tree.log https://transfer.sh/
-  - curl --upload-file $ZIMAGE https://transfer.sh/
+  - cd $KERNEL_DIR/out
+  - time tar -I pxz -cf $DIR-out-$(date +%Y%m%d).tar.xz *
+  - wput $DIR-out-$(date +%Y%m%d).tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"/
+  - rm $DIR-out-$(date +%Y%m%d).tar.xz
+  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/
 
 deploy:
   skip_cleanup: true
