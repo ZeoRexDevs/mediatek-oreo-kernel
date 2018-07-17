@@ -29,7 +29,7 @@ script:
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE k53v1_64_bsp_defconfig
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE -j16
   - KERNEL_DIR=$PWD/mediatek-oreo-kernel
-  - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/*Image*
+  - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/Image*
 
 after_success:
   - tree -a $KERNEL_DIR/out >> $KERNEL_DIR/out-tree.log
@@ -41,7 +41,7 @@ deploy:
   provider: releases
   api_key: "$GitOAUTHToken"
   file_glob: true
-  file: $KERNEL_DIR/out/arch/arm64/boot/*Image*
+  file: $KERNEL_DIR/out/arch/arm64/boot/Image*
   on:
     tags: false
     repo: ZeoRexDevs/mediatek-oreo-kernel
