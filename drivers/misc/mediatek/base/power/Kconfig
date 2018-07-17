@@ -8,6 +8,14 @@ config MTK_CLKMGR
           disabling, and querying status. If this config is not set,
           system will use COMMON_CLK instead.
 
+config MT2701_DCM
+       bool "Enable MT2701/MT7623 dynamic clock manager"
+       default y
+       depends on (MACH_MT2701 || ARCH_MT7623) && MTK_BASE_POWER
+       ---help---
+         Dynamic Clock Manager(DCM) can help slow bus frequency when
+         DCM's hardware detects bus is in idle state.
+
 config MTK_DISABLE_PICACHU
         bool "Disable Picachu"
         default n
