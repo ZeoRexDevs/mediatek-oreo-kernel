@@ -16,8 +16,8 @@ addons:
     - wput
 
 before_install:
-  - git clone https://github.com/ZeoRexDevs/gcc_linaro_731_toolchain ~/gcc_linaro_731_toolchain/
-  - sudo chmod -R a+x ~/gcc_linaro_731_toolchain/*
+  - git clone https://github.com/ZeoRexDevs/gcc_linaro_731_toolchain ~/linaro_731_toolchain/
+  - sudo chmod -R a+x ~/linaro_731_toolchain/*
 
 install: true
 
@@ -25,7 +25,7 @@ script:
   - mkdir out
   - make O=out clean
   - make O=out mrproper
-  - export CROSS_COMPILE=~/gcc_linaro_731_toolchain/bin/aarch64-linux-gnu-
+  - export CROSS_COMPILE=~/linaro_731_toolchain/bin/aarch64-linux-gnu-
   - export ARCH=arm64 
   - export KBUILD_BUILD_USER="fr3aky"
   - export KBUILD_BUILD_HOST="Phantom_Zone"
@@ -40,7 +40,7 @@ after_success:
   - travis_wait 30 time tar -I pxz -cf mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz *
   - wput mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"/
   - rm mediatek-oreo-kernel-out-$(date +%Y%m%d).tar.xz
-  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/mediatek-oreo-kernel-zImage
+  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/mediatek-oreo-kernel-linaro-zImage
 
 deploy:
   skip_cleanup: true
